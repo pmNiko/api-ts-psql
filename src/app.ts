@@ -1,6 +1,8 @@
 import express, { Application, json, urlencoded } from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
+import IndexRoutes from './routes/index.routes'
+import PostRoutes from './routes/post.routes'
 
 type Port = string | number
 
@@ -16,6 +18,7 @@ export class App {
     this.port = aPort
     this.setting()
     this.middlewares()
+    this.routes()
   }
 
   /**
@@ -34,6 +37,16 @@ export class App {
     // Enable send data from from
     this.app.use(urlencoded({ extended: false }))
   }
+
+
+  /**
+   * Routes 
+   */
+  routes() {
+    this.app.use(IndexRoutes)
+    this.app.use('/posts', PostRoutes)
+  }
+
 
   /**
    * asignation of port
